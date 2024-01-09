@@ -1,32 +1,14 @@
-// pages/champions/[id].js
 import Title from "@/components/title";
 import axios from "axios";
 import Image from "next/image";
+import { FaAngleLeft, FaChevronDown } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
-import { PiSword } from "react-icons/pi";
-import { FaChevronDown, FaShieldAlt } from "react-icons/fa";
-import { GiMagicPalm, GiStrong } from "react-icons/gi";
 
 import { ChampionSpells } from "@/components/pages/champion/spells";
+import { ChampionInfo } from "@/components/pages/champion/info";
+import Link from "next/link";
 
 const ChampionPage = ({ champion }) => {
-  const infoRef = useRef();
-
-  const info = Object.entries(champion.info).map(([name, count]) => ({
-    name,
-    count,
-    icon:
-      name === "attack" ? (
-        <PiSword />
-      ) : name === "defense" ? (
-        <FaShieldAlt />
-      ) : name === "magic" ? (
-        <GiMagicPalm />
-      ) : (
-        <GiStrong />
-      ),
-  }));
-
   if (!champion) {
     return <div>Champion not found</div>;
   }
@@ -34,8 +16,17 @@ const ChampionPage = ({ champion }) => {
   return (
     <>
       <div className="relative flex flex-col">
-        <div className="relative flex  flex-col items-center justify-end w-screen h-screen p-10 bg-gradient-to-t from-black to-transparent z-50">
-          <div className=" w-9/12 flex flex-col items-center ">
+        <div className="relative flex  flex-col items-center justify-between w-screen h-screen  bg-gradient-to-t from-black to-transparent z-50">
+          <div className="w-full py-4 flex justify-center ">
+            <Link
+              href="/home"
+              className="px-4 py-1 bg-dark hover:bg-green text-green hover:text-dark rounded-xl flex items-center"
+            >
+              <FaAngleLeft className="mr-1" />
+              Back to champions
+            </Link>
+          </div>
+          <div className=" w-9/12 py-4 flex flex-col items-center ">
             <Title title={champion.name} size="text-[90px]" />
             <span className="text-center text-white text-sm mt-3 font-extralight ">
               {champion.lore}
@@ -55,55 +46,7 @@ const ChampionPage = ({ champion }) => {
           />
         </div>
       </div>
-      <div className="relative flex flex-col justify-center  bg-dark p-10">
-        <div className="flex flex-col items-center  justify-start w-full  border border-dark-yellow px-10 py-20">
-          <Title title="info" size="text-[70px]" />
-          <div className="flex justify-center items-center w-full mt-4">
-            {info.map((i, index) => (
-              <div
-                key={index}
-                className="hexagon flex flex-col justify-center items-center w-[120px] h-[140px] mx-4  bg-dark-gray text-green"
-              >
-                <span className="capitalize text-sm font-semibold">
-                  {i.name}
-                </span>
-                <span className="text-4xl text-extralight  my-1">
-                  {i.count}
-                </span>
-                <span> {i.icon} </span>
-              </div>
-            ))}
-          </div>
-          <div className="flex w-8/12 mt-8">
-            <div className="w-6/12 px-4 flex flex-col items-center">
-              <h2 className="text-white text-xl ">Allytips</h2>
-              <div className="flex flex-col mt-2">
-                {champion.allytips.map((i, index) => (
-                  <div
-                    key={index}
-                    className="font-extralight text-ice text-xs  py-4  border-t border-green text-center"
-                  >
-                    {i}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="w-6/12 px-4 flex flex-col items-center">
-              <h2 className="text-white text-xl ">Enemytips</h2>
-              <div className="flex flex-col mt-2">
-                {champion.enemytips.map((i, index) => (
-                  <div
-                    key={index}
-                    className="font-extralight text-ice text-xs py-4  border-t border-green text-center"
-                  >
-                    {i}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ChampionInfo champion={champion} />
       <ChampionSpells champion={champion} />
     </>
   );
