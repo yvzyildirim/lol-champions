@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChampionSpells } from "@/components/pages/champion/spells";
 import { ChampionInfo } from "@/components/pages/champion/info";
 import Link from "next/link";
+import { ChampionSkins } from "@/components/pages/champion/skins";
 
 const ChampionPage = ({ champion }) => {
   if (!champion) {
@@ -48,6 +49,7 @@ const ChampionPage = ({ champion }) => {
       </div>
       <ChampionInfo champion={champion} />
       <ChampionSpells champion={champion} />
+      <ChampionSkins champion={champion} />
     </>
   );
 };
