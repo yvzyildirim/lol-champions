@@ -58,7 +58,6 @@ export async function getServerSideProps({ params }) {
   try {
     const { id } = params;
 
-    // İstenen şampiyonun verilerini içeren API'den gelen veriyi al
     const response = await axios.get(
       `https://ddragon.leagueoflegends.com/cdn/13.24.1/data/en_US/champion/${id}.json`
     );
